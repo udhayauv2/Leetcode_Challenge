@@ -1,0 +1,36 @@
+class Solution {
+    public boolean[] pathExistenceQueries(int n, int[] nums, int maxDiff, int[][] queries) {
+        int[] dp = new int[n];
+        boolean[] ans = new boolean[queries.length];
+        for(int i=0;i<n-1;i++){
+            dp[i] = Math.abs(nums[i] - nums[i+1]);
+        }
+        int ind = 0;
+        for(int[] q : queries){
+            int left = q[0];
+            int right = q[1];
+            if(left == right){
+                ans[ind++] = true;
+            }else if(left > right){
+                boolean is = true;
+                for(int i=right ; i<left;i++){
+                    if(dp[i] > maxDiff){
+                        is = false;
+                    }
+                }
+                if(is) ans[ind++] = true;
+                else ans[ind++] = false;
+            }else{
+                boolean is = true;
+                for(int i=left ; i<right;i++){
+                    if(dp[i] > maxDiff){
+                        is = false;
+                    }
+                }
+                if(is) ans[ind++] = true;
+                else ans[ind++] = false;
+            }
+        }
+        return ans;
+    }
+}
