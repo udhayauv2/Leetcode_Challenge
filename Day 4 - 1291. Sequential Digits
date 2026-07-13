@@ -1,0 +1,40 @@
+class Solution {
+    public List<Integer> sequentialDigits(int low, int high) {
+
+        List<Integer> list = new ArrayList<>();
+        int num = low;
+        int stlen = 0, endlen = 0;
+        while(num > 0){
+            num /= 10;
+            stlen++;
+        }
+        num = high;
+        while(num > 0){
+            num /= 10;
+            endlen++;
+        }
+        int st = 0,end =0;
+        int st1 = 0 , end1 = 0;
+        for(int i=1;i<=stlen;i++){
+            st1 = st1*10 +1;
+            st = st*10 +i;
+        }
+        int copy = st;
+        while(stlen <= endlen){
+            copy = st;
+            while(true){
+                if(st > high){
+                    break;
+                }
+                if(st >= low) list.add(st);
+                if(st%10 == 9) break;
+                st += st1;
+                
+            }
+            stlen++;
+            st = (copy*10) + stlen;
+            st1 = (st1*10)  + 1;
+        }
+        return list;
+    }
+}
