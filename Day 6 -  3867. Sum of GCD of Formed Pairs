@@ -1,0 +1,29 @@
+class Solution {
+
+    public int gcd(int a , int b){
+
+        if(a%b == 0) return b;
+        int temp = b;
+        b = a%b;
+        a = temp;
+        return gcd(a , b);
+    }
+
+    public long gcdSum(int[] nums) {
+        int len = nums.length;
+        int[] pre_gcd = new int[len];
+        int max = Integer.MIN_VALUE;
+        for(int i=0;i<len;i++){
+            max = nums[i] > max ? nums[i] : max;
+            pre_gcd[i] = gcd(Math.max(max , nums[i]) , Math.min(max , nums[i]));
+        }
+        Arrays.sort(pre_gcd);
+        long sum = 0;
+        for(int i=0;i<len/2;i++){
+            int a = pre_gcd[i];
+            int b = pre_gcd[len-i-1];
+            sum += gcd(b,a);
+        }
+        return sum;
+    }
+}
