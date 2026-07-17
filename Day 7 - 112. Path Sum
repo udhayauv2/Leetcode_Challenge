@@ -1,0 +1,47 @@
+ /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean dfs(TreeNode root , int sum ,int target){
+
+        /*
+        
+        if(sum > target) return false;
+        -> not works , when the node consists of negative values like
+        [-2 , null , -3] and target = 5 
+
+        */
+        
+        if(root.left == null && root.right == null){
+            if(sum == target) return true;
+            return false;
+        }
+        boolean left = false , right = false;
+        if(root.left != null){
+            left = dfs(root.left , sum + root.left.val , target);
+        }
+        if(root.right != null){
+            right = dfs(root.right , sum + root.right.val , target);
+        }
+        return  left || right ;
+
+    }
+    public boolean hasPathSum(TreeNode root, int target) {
+        if(root == null) return false;
+        int sum = root.val;
+        return dfs(root , sum , target);
+
+    }
+}
